@@ -5,6 +5,15 @@
   .Description
    Used to test Active Directory authentication. The script checks that this user with the specified username and password exists in AD. 
    If the username and password pair exists, it returns true, otherwise it returns false. Installation of the RSAT client required for its operation:
+
+   net stop wuauserv
+   Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -Name UseWUServer -Value 0 -Force
+   net start wuauserv
+   Add-WindowsCapability -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 -Online
+   Import-Module ActiveDirectory -Force
+   net stop wuauserv
+   Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -Name UseWUServer -Value 1 -Force
+   net start wuauserv
    
   .Parameter Server
    The Active Directory server.
